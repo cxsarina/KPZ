@@ -17,6 +17,23 @@ namespace ClassLibraryForTask5_6
         private EventHandler<string> _click;
         private EventHandler<string> _mouseOver;
 
+        public LightElementNode(string tagName, List<LightNode> children, List<string> cssClasses = null)
+        {
+            TagName = tagName;
+            Children = children;
+            CssClasses = cssClasses ?? new List<string>();
+        }
+
+        public override void Accept(IHtmlVisitor visitor)
+        {
+            visitor.VisitElementNode(this);
+            foreach (var child in Children)
+            {
+                child.Accept(visitor); 
+            }
+        }
+
+        
         public LightElementNode(string tagName, string displayType, string closingType, List<LightNode> children, List<string> cssClasses = null)
         {
             TagName = tagName;
@@ -55,14 +72,10 @@ namespace ClassLibraryForTask5_6
             get
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append($"<{TagName} class=\"{string.Join(" ", CssClasses)}\"");
-                sb.Append($" onclick=\"{_click}\" onmouseover=\"{_mouseOver}\">");
-                if (Children.Count > 0)
+                sb.Append($"<{TagName} class=\"{string.Join(" ", CssClasses)}\">");
+                foreach (var child in Children)
                 {
-                    foreach (var child in Children)
-                    {
-                        sb.Append(child.OuterHtml);
-                    }
+                    sb.Append(child.OuterHtml);
                 }
                 sb.Append($"</{TagName}>");
                 return sb.ToString();
@@ -74,16 +87,14 @@ namespace ClassLibraryForTask5_6
             get
             {
                 StringBuilder sb = new StringBuilder();
-                if (Children.Count > 0)
+                foreach (var child in Children)
                 {
-                    foreach (var child in Children)
-                    {
-                        sb.Append(child.InnerHtml);
-                    }
+                    sb.Append(child.InnerHtml);
                 }
                 return sb.ToString();
             }
         }
+
         private IElementState currentState;
 
         public void SetState(IElementState state)
@@ -91,5 +102,6 @@ namespace ClassLibraryForTask5_6
             currentState = state;
             currentState.ApplyState(this);
         }
+
     }
 }

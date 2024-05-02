@@ -1,11 +1,15 @@
-﻿namespace ClassLibraryForTask5_6
+﻿using ClassLibrary;
+
+namespace ClassLibraryForTask5_6
 {
     public abstract class LightNode
     {
+       
         public abstract string OuterHtml { get; }
         public abstract string InnerHtml { get; }
         public event EventHandler<string> Click;
         public List<LightNode> Children { get; set; }
+        public abstract void Accept(IHtmlVisitor visitor);
 
         public LightNode()
         {

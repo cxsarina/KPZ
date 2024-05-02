@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,10 @@ namespace ClassLibraryForTask5_6
         {
             Text = text;
         }
-
+        public override void Accept(IHtmlVisitor visitor)
+        {
+            visitor.VisitSecondHeaderNode(this);
+        }
         public override string OuterHtml => $"<h2>{Text}</h2>";
         public override string InnerHtml => OuterHtml;
     }

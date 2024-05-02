@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,10 @@ namespace ClassLibraryForTask5_6
             Text = text;
         }
 
+        public override void Accept(IHtmlVisitor visitor)
+        {
+            visitor.VisitBlockquoteNode(this);
+        }
         public override string OuterHtml => $"<blockquote>{Text}</blockquote>";
         public override string InnerHtml => OuterHtml;
     }

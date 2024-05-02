@@ -1,4 +1,5 @@
-﻿using ClassLibraryForTask5_6;
+﻿using ClassLibrary;
+using ClassLibraryForTask5_6;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,10 @@ namespace ClassLibraryForTask3_4
             Href = href;
             _loadingStrategy = loadingStrategy;
         }
-
+        public override void Accept(IHtmlVisitor visitor)
+        {
+            visitor.VisitImageNode(this);
+        }
         public override string OuterHtml => $"<img src=\"{_loadingStrategy.LoadImage(Href)}\">";
         public override string InnerHtml => OuterHtml;
     }
