@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,6 +83,13 @@ namespace ClassLibraryForTask5_6
                 }
                 return sb.ToString();
             }
+        }
+        private IElementState currentState;
+
+        public void SetState(IElementState state)
+        {
+            currentState = state;
+            currentState.ApplyState(this);
         }
     }
 }
