@@ -5,7 +5,12 @@
         public abstract string OuterHtml { get; }
         public abstract string InnerHtml { get; }
         public event EventHandler<string> Click;
+        public List<LightNode> Children { get; set; }
 
+        public LightNode()
+        {
+            Children = new List<LightNode>();
+        }
         protected void OnClick(string message)
         {
             Click?.Invoke(this, message);
